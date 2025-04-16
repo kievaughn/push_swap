@@ -13,7 +13,13 @@ SRCS = src/main.c \
        src/libft/ft_lstsize_bonus.c \
        src/controls.c \
        src/sort.c \
-       src/calculations.c
+       src/calculations.c \
+       src/printf/ft_printf.c \
+       src/printf/ft_putchar.c \
+       src/printf/ft_puthex.c \
+       src/printf/ft_putnbr_u.c \
+       src/printf/ft_putnbr.c \
+       src/printf/ft_putstr.c
 
 OBJS = $(SRCS:src/%.c=$(OBJ_PATH)%.o)
 HEADERS = includes/push_swap.h
