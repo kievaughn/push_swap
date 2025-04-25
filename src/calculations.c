@@ -27,27 +27,27 @@ void    set_index(t_list *lst)
 	}
 }
 
-void	set_cost(t_list *a, t_list *b)
+void	set_cost(t_list *lst)
 {
 	int		i;
-	t_list	*temp_a;
-	t_list	*temp_b;
+	int		size;
 
-	temp_a = a;
-	temp_b = b;
 	i = 0;
-	while(temp_a)
+	size = ft_lstsize(lst);
+	while(lst)
 	{
-		temp_a->cost_to_top = i;
+		if (i > size / 2)
+		{
+			lst->cost_to_top = size - i;
+			lst->reverse = 1;
+		}
+		else
+		{
+			lst->cost_to_top = i;
+			lst->reverse = 0;
+		}
 		i++;
-		temp_a = temp_a->next;
-	}
-	i = 0;
-	while(temp_b)
-	{
-		temp_b->cost_to_top = i;
-		i++;
-		temp_b = temp_b->next;
+		lst = lst->next;
 	}
 }
 
@@ -76,9 +76,7 @@ void	set_lowest(t_list *a, t_list *b)
 
 void	set_nearest(t_list *a, t_list *b)
 {
-	t_list	*temp_a;
 	t_list	*temp_b;
-	int		nearest;
 
 	temp_b = b;
 	while (temp_b)
@@ -87,21 +85,11 @@ void	set_nearest(t_list *a, t_list *b)
 		temp_b = temp_b->next;
 	}
 	temp_b = b;
-	while(temp_b)
-	{
-		temp_a = a;
-		nearest = INT_MAX;
-		while(temp_a)
-		{
-			if ((temp_a->index - temp_b->index < nearest) && (temp_a->index - temp_b->index > 0))
-			{
-				temp_b->nearest = temp_a->index;
-				nearest = temp_a->index - temp_b->index;
-			}
-			temp_a = temp_a->next;
-		}
-		temp_b = temp_b->next;
-	}
+	while (temp_b)
+    {
+        set_nearest_higher(a, temp_b);
+        temp_b = temp_b->next;
+    }
 	set_lowest(a, b);
 }
 
@@ -109,25 +97,14 @@ t_list	*get_cheapest(t_list *a, t_list *b)
 {
 	t_list	*cheapest_node;
 	int		cheapest;
-	int 	total_cost;
-	t_list *temp_a;
+	int		total_cost;
 
 	cheapest_node = NULL;
 	cheapest = INT_MAX;
 	set_nearest(a, b);
 	while (b)
 	{
-		total_cost = b->cost_to_top;
-		temp_a = a;
-		while (temp_a)
-		{
-			if (temp_a->index == b->nearest)
-			{
-				total_cost += temp_a->cost_to_top;
-				break;
-			}
-			temp_a = temp_a->next;
-		}
+		total_cost = get_total_cost(a, b);
 		if (total_cost < cheapest)
 		{
 			cheapest = total_cost;
@@ -136,22 +113,4 @@ t_list	*get_cheapest(t_list *a, t_list *b)
 		b = b->next;
 	}
 	return (cheapest_node);
-}
-
-int     find_median(t_list *a)
-{
-    int     sum;
-    int     i;
-	t_list *temp_a;
-
-    sum = 0;
-    i = 0;
-	temp_a = a;
-    while(temp_a)
-    {
-        sum += temp_a->index;
-		i++;
-        temp_a = temp_a->next;
-    }
-    return(sum/i);
 }

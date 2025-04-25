@@ -14,6 +14,7 @@ typedef struct s_list
 	int				index;
 	int				cost_to_top;
 	int				nearest;
+	int				reverse;
 	struct s_list	*next;
 }					t_list;
 
@@ -47,10 +48,19 @@ short int    is_sorted(t_list *lst);
 void    set_index(t_list *lst);
 int     find_median(t_list *a);
 void    move_to_b(t_list **a, t_list **b);
-void	set_cost(t_list *a, t_list *b);
+void	set_cost(t_list *lst);
 void    move_to_a(t_list **a, t_list **b);
 void	set_nearest(t_list *a, t_list *b);
 t_list	*get_cheapest(t_list *a, t_list *b);
 void    last_rotate(t_list **a);
+void    set_nearest_higher(t_list *a, t_list *b_node);
+int		get_total_cost(t_list *a, t_list *b_node);
+void    align_stacks(t_list **a, t_list **b, t_list *cheapest);
+void	push_swap(t_list **a, t_list **b);
 
+//void	build_stack(char **argv, t_list **a);
+void	build_and_validate(int argc, char **argv, t_list **a);
+
+//delete
+void	print_list(t_list *lst, char lstname);
 #endif

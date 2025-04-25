@@ -14,6 +14,8 @@ short int    is_sorted(t_list *lst)
 
 void    small_sort(t_list **a)
 {
+    if (is_sorted(*a))
+		return;
     if ((*a)->content < (*a)->next->content && (*a)->next->content > (*a)->next->next->content)
     {
         swap(a, 'a');
@@ -57,40 +59,41 @@ void    move_to_b(t_list **a, t_list **b)
     small_sort(a);
 }
 
-
 void    move_to_a(t_list **a, t_list **b)
 {
-    t_list  *cheapest;
-    t_list  *temp_a;
+	t_list  *cheapest;
 
-    while(ft_lstsize(*b) != 0)
-    {
-        set_cost(*a, *b);
-        cheapest = get_cheapest(*a, *b);
-        temp_a = *a;
-        while (cheapest && cheapest->cost_to_top > 0)
-        {
-            rotate(b, 'b');
-            cheapest->cost_to_top--;
-        }
-        while (temp_a)
-        {
-            if (cheapest && cheapest->nearest == temp_a->index)
-            {
-                while (temp_a->cost_to_top > 0)
-                {
-                    rotate(a, 'a');
-                    temp_a->cost_to_top--;
-                }
-            }
-            temp_a = temp_a->next;
-        }
-        push(b, a, 'a');
-    }
+	while (ft_lstsize(*b) != 0)
+	{
+		set_cost(*a);
+		set_cost(*b);
+
+		cheapest = get_cheapest(*a, *b);
+		align_stacks(a, b, cheapest);
+		push(b, a, 'a');
+	}
 }
 
 void    last_rotate(t_list **a)
 {
-    while((*a)->index != 1)
-        rotate(a, 'a');
+    t_list  *temp_a;
+    int     position;
+
+    temp_a = *a;
+    position = 0;
+    while (temp_a && temp_a->index != 1)
+    {
+        position++;
+        temp_a = temp_a->next;
+    }
+    if (position <= ft_lstsize(*a) / 2)
+    {
+        while ((*a)->index != 1)
+            rotate(a, 'a');
+    }
+    else
+    {
+        while ((*a)->index != 1)
+            reverse_rotate(a, 'a');
+    }
 }
