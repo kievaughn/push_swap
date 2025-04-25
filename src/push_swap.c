@@ -125,4 +125,5 @@ void	push_swap(t_list **a, t_list **b)
     set_cost(*b);
     move_to_a(a, b);
     last_rotate(a);
+    
 }
