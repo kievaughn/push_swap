@@ -1,34 +1,5 @@
 #include "push_swap.h"
 
-// void build_stack(char **argv, t_list **a)
-// {
-// 	int i = 1;
-
-// 	while (argv[i])
-// 	{
-// 		ft_lstadd_back(a, ft_lstnew(ft_atoi(argv[i])));
-// 		i++;
-// 	}
-// }
-
-// void push_swap(int argc, t_list **a, t_list **b)
-// {
-// 	if (argc == 4)
-// 		small_sort(a);
-// 	else
-// 	{
-// 		set_index(*a);
-//         if (argc > 3)
-//         {
-//             move_to_b(a, b);
-//             set_cost(*a);
-//             set_cost(*b);
-//             move_to_a(a, b);
-//         }
-//         last_rotate(a);
-// 	}	
-// }
-
 static void		error_exit_and_free(t_list **a)
 {
     t_list *tmp;
@@ -42,58 +13,60 @@ static void		error_exit_and_free(t_list **a)
     exit(1);
 }
 
-static long		parse_long(const char **s)
+static long parse_long(const char **str)
 {
-    long acc = 0;
-    int  neg = 0;
+    long result = 0;
+    int is_negative = 0;
 
-    /* optional '+' / '-' */
-    if (**s == '+' || **s == '-')
-        neg = (*((*s)++) == '-');
-
-    /* must see at least one digit */
-    if (**s < '0' || **s > '9')
+    if (**str == '+' || **str == '-')
+        is_negative = (*((*str)++) == '-');
+    if (**str < '0' || **str > '9')
         return LONG_MAX;
-
-    /* accumulate, with overflow check */
-    while (**s >= '0' && **s <= '9')
+    while (**str >= '0' && **str <= '9')
     {
-        int d = **s - '0';
-        if (acc > (LONG_MAX - d) / 10)
+        int digit = **str - '0';
+
+        if (result > (LONG_MAX - digit) / 10)
             return LONG_MAX;
-        acc = acc * 10 + d;
-        (*s)++;
+
+        result = result * 10 + digit;
+        (*str)++;
     }
-    return neg ? -acc : acc;
+    if (is_negative)
+        return -result;
+    else
+        return result;
 }
 
 void	build_and_validate(int argc, char **argv, t_list **a)
 {
-    int         i = 1;
-    const char *p;
-    long        v;
-    t_list     *scan, *node;
+    int         i;
+    const char *ptr;
+    long        value;
+    t_list     *scan;
+    t_list      *node;
 
+    i = 1;
     while (i < argc)
     {
-        p = argv[i++];
-        while (*p)
+        ptr = argv[i++];
+        while (*ptr)
         {
-            while (*p == ' ' || *p == '\t')
-                p++;
-            if (!*p)
+            while (*ptr == ' ' || *ptr == '\t')
+                ptr++;
+            if (!*ptr)
                 break;
-            v = parse_long(&p);
-            if (v == LONG_MAX || v < INT_MIN || v > INT_MAX)
+            value = parse_long(&ptr);
+            if (value == LONG_MAX || value < INT_MIN || value > INT_MAX)
                 error_exit_and_free(a);
             scan = *a;
             while (scan)
             {
-                if (scan->content == (int)v)
+                if (scan->content == (int)value)
                     error_exit_and_free(a);
                 scan = scan->next;
             }
-            node = ft_lstnew((int)v);
+            node = ft_lstnew((int)value);
             if (!node)
                 exit(1);
             ft_lstadd_back(a, node);
@@ -125,5 +98,4 @@ void	push_swap(t_list **a, t_list **b)
     set_cost(*b);
     move_to_a(a, b);
     last_rotate(a);
-    
 }
