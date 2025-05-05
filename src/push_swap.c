@@ -37,14 +37,34 @@ static long parse_long(const char **str)
     else
         return result;
 }
-
-void	build_and_validate(int argc, char **argv, t_list **a)
+static void     validate_and_add(const char **p, t_list **a)
 {
-    int         i;
-    const char *ptr;
     long        value;
-    t_list     *scan;
-    t_list      *node;
+    t_list		*scan;
+    t_list		*node;
+
+    value = parse_long(p);
+    if (value == LONG_MAX || value < INT_MIN || value > INT_MAX)
+        error_exit_and_free(a);
+
+    scan = *a;
+    while (scan)
+    {
+        if (scan->content == (int)value)
+            error_exit_and_free(a);
+        scan = scan->next;
+    }
+
+    node = ft_lstnew((int)value);
+    if (!node)
+        exit(1);
+    ft_lstadd_back(a, node);
+}
+
+void    build_and_validate(int argc, char **argv, t_list **a)
+{
+    int          i;
+    const char  *ptr;
 
     i = 1;
     while (i < argc)
@@ -56,20 +76,7 @@ void	build_and_validate(int argc, char **argv, t_list **a)
                 ptr++;
             if (!*ptr)
                 break;
-            value = parse_long(&ptr);
-            if (value == LONG_MAX || value < INT_MIN || value > INT_MAX)
-                error_exit_and_free(a);
-            scan = *a;
-            while (scan)
-            {
-                if (scan->content == (int)value)
-                    error_exit_and_free(a);
-                scan = scan->next;
-            }
-            node = ft_lstnew((int)value);
-            if (!node)
-                exit(1);
-            ft_lstadd_back(a, node);
+            validate_and_add(&ptr, a);
         }
     }
 }
@@ -80,6 +87,8 @@ void	push_swap(t_list **a, t_list **b)
 	
 	size = ft_lstsize(*a);
     if (size <= 1)
+        return;
+	if (is_sorted(*a))
         return;
     if (size == 2)
     {
