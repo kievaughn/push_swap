@@ -1,33 +1,44 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbrandon <kbrandon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 17:39:15 by kbrandon          #+#    #+#             */
+/*   Updated: 2025/05/05 17:40:59 by kbrandon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void    set_nearest_higher(t_list *a, t_list *b_node)
+void	set_nearest_higher(t_list *a, t_list *b_node)
 {
-    t_list  *temp_a;
-    int     diff;
-    int     smallest_diff;
+	t_list	*temp_a;
+	int		diff;
+	int		smallest_diff;
 
-    temp_a = a;
-    smallest_diff = INT_MAX;
-    b_node->nearest = 0;
-
-    while (temp_a)
-    {
-        if (temp_a->index > b_node->index)
-        {
-            diff = temp_a->index - b_node->index;
-            if (diff < smallest_diff)
-            {
-                smallest_diff = diff;
-                b_node->nearest = temp_a->index;
-            }
-        }
-        temp_a = temp_a->next;
-    }
+	temp_a = a;
+	smallest_diff = INT_MAX;
+	b_node->nearest = 0;
+	while (temp_a)
+	{
+		if (temp_a->index > b_node->index)
+		{
+			diff = temp_a->index - b_node->index;
+			if (diff < smallest_diff)
+			{
+				smallest_diff = diff;
+				b_node->nearest = temp_a->index;
+			}
+		}
+		temp_a = temp_a->next;
+	}
 }
 
-int get_total_cost(t_list *a, t_list *b_node)
+int	get_total_cost(t_list *a, t_list *b_node)
 {
-	t_list *temp_a;
+	t_list	*temp_a;
 
 	temp_a = a;
 	while (temp_a)
@@ -39,9 +50,9 @@ int get_total_cost(t_list *a, t_list *b_node)
 	return (INT_MAX);
 }
 
-void    align_stacks(t_list **a, t_list **b, t_list *cheapest)
+void	align_stacks(t_list **a, t_list **b, t_list *cheapest)
 {
-	t_list *temp_a;
+	t_list	*temp_a;
 
 	while (cheapest->cost_to_top > 0)
 	{
@@ -55,7 +66,7 @@ void    align_stacks(t_list **a, t_list **b, t_list *cheapest)
 	while (temp_a)
 	{
 		if (temp_a->index == cheapest->nearest)
-			break;
+			break ;
 		temp_a = temp_a->next;
 	}
 	while (temp_a && temp_a->cost_to_top > 0)
@@ -68,20 +79,20 @@ void    align_stacks(t_list **a, t_list **b, t_list *cheapest)
 	}
 }
 
-int     find_median(t_list *a)
+int	find_median(t_list *a)
 {
-    int     sum;
-    int     i;
-	t_list *temp_a;
+	int		sum;
+	int		i;
+	t_list	*temp_a;
 
-    sum = 0;
-    i = 0;
+	sum = 0;
+	i = 0;
 	temp_a = a;
-    while(temp_a)
-    {
-        sum += temp_a->index;
+	while (temp_a)
+	{
+		sum += temp_a->index;
 		i++;
-        temp_a = temp_a->next;
-    }
-    return(sum/i);
+		temp_a = temp_a->next;
+	}
+	return (sum / i);
 }

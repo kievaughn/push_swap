@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   calculations.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbrandon <kbrandon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 17:39:04 by kbrandon          #+#    #+#             */
+/*   Updated: 2025/05/05 17:39:05 by kbrandon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-void    set_index(t_list *lst)
+void	set_index(t_list *lst)
 {
-    int		index;
+	int		index;
 	t_list	*temp;
 	t_list	*temp_node;
 	int		size;
@@ -13,9 +25,10 @@ void    set_index(t_list *lst)
 	{
 		temp = lst;
 		temp_node = NULL;
-		while(temp)
+		while (temp)
 		{
-			if (temp->index == 0 && (temp_node == NULL || temp->content < temp_node->content))
+			if (temp->index == 0 && (temp_node == NULL
+					|| temp->content < temp_node->content))
 				temp_node = temp;
 			temp = temp->next;
 		}
@@ -29,12 +42,12 @@ void    set_index(t_list *lst)
 
 void	set_cost(t_list *lst)
 {
-	int		i;
-	int		size;
+	int	i;
+	int	size;
 
 	i = 0;
 	size = ft_lstsize(lst);
-	while(lst)
+	while (lst)
 	{
 		if (i > size / 2)
 		{
@@ -86,10 +99,10 @@ void	set_nearest(t_list *a, t_list *b)
 	}
 	temp_b = b;
 	while (temp_b)
-    {
-        set_nearest_higher(a, temp_b);
-        temp_b = temp_b->next;
-    }
+	{
+		set_nearest_higher(a, temp_b);
+		temp_b = temp_b->next;
+	}
 	set_lowest(a, b);
 }
 

@@ -1,18 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kbrandon <kbrandon@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/05 17:38:59 by kbrandon          #+#    #+#             */
+/*   Updated: 2025/05/05 17:41:41 by kbrandon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
-
-#include <stdio.h>
-
-void	print_list(t_list *lst, char lstname)
-{
-	printf("(%d)%c -> ", ft_lstsize(lst), lstname);
-	while (lst != NULL)
-	{
-		printf("i: %d ", lst->index);
-		printf("n: %d //", lst->nearest);
-		lst = lst->next;
-	}
-	printf("\n");
-}
 
 int	main(int argc, char *argv[])
 {
@@ -25,6 +23,10 @@ int	main(int argc, char *argv[])
 	{
 		build_and_validate(argc, argv, &a);
 		push_swap(&a, &b);
+		ft_lstclear(&a);
+		ft_lstclear(&b);
+		free(a);
+		free(b);
 	}
 	return (0);
 }

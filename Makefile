@@ -10,7 +10,6 @@ SRCS = src/main.c \
        src/calculations.c \
        src/utils.c \
        src/push_swap.c \
-       src/validation.c \
        src/libft/ft_atoi.c \
        src/libft/ft_lstadd_back_bonus.c \
        src/libft/ft_lstclear_bonus.c \
@@ -27,27 +26,21 @@ SRCS = src/main.c \
 OBJS = $(SRCS:src/%.c=$(OBJ_PATH)%.o)
 HEADERS = includes/push_swap.h
 
-# Compile .o files from .c
 $(OBJ_PATH)%.o: src/%.c $(HEADERS)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Default target
 all: $(TARGET)
 
-# Link object files into executable
 $(TARGET): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(TARGET)
 
-# Clean object files
 clean:
 	rm -rf $(OBJ_PATH)
 
-# Clean object files and binary
 fclean: clean
 	rm -f $(TARGET)
 
-# Rebuild everything
 re: fclean all
 
 .PHONY: all clean fclean re
