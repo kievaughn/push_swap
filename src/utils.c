@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kievaughn <kievaughn@student.42.fr>        +#+  +:+       +#+        */
+/*   By: kbrandon <kbrandon@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:39:15 by kbrandon          #+#    #+#             */
-/*   Updated: 2025/05/08 12:41:14 by kievaughn        ###   ########.fr       */
+/*   Updated: 2025/05/08 15:07:53 by kbrandon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,45 +49,46 @@ int	get_total_cost(t_list *a, t_list *b_node)
 	}
 	return (INT_MAX);
 }
-static void	common_rotate(t_list **a, t_list **b, 
-			t_list *cheapest, t_list *temp_a)
+
+static void	common_rotate(t_list **a, t_list **b, t_list *cheapest,
+		t_list *temp_a)
 {
-    while (cheapest->cost_to_top > 0 && temp_a && temp_a->cost_to_top > 0
-        && cheapest->reverse == temp_a->reverse)
-    {
-        if (cheapest->reverse)
-            reverse_rotate_r(a, b);
-        else
-            rotate_r(a, b);
-        cheapest->cost_to_top--;
-        temp_a->cost_to_top--;
-    }
+	while (cheapest->cost_to_top > 0 && temp_a && temp_a->cost_to_top > 0
+		&& cheapest->reverse == temp_a->reverse)
+	{
+		if (cheapest->reverse)
+			reverse_rotate_r(a, b);
+		else
+			rotate_r(a, b);
+		cheapest->cost_to_top--;
+		temp_a->cost_to_top--;
+	}
 }
 
 void	align_stacks(t_list **a, t_list **b, t_list *cheapest)
 {
-    t_list *temp_a;
+	t_list	*temp_a;
 
-    temp_a = *a;
-    while (temp_a && temp_a->index != cheapest->nearest)
-        temp_a = temp_a->next;
-    common_rotate(a, b, cheapest, temp_a);
-    while (cheapest->cost_to_top > 0)
-    {
-        if (cheapest->reverse)
-            reverse_rotate(b, 'b');
-        else
-            rotate(b, 'b');
-        cheapest->cost_to_top--;
-    }
-    while (temp_a && temp_a->cost_to_top > 0)
-    {
-        if (temp_a->reverse)
-            reverse_rotate(a, 'a');
-        else
-            rotate(a, 'a');
-        temp_a->cost_to_top--;
-    }
+	temp_a = *a;
+	while (temp_a && temp_a->index != cheapest->nearest)
+		temp_a = temp_a->next;
+	common_rotate(a, b, cheapest, temp_a);
+	while (cheapest->cost_to_top > 0)
+	{
+		if (cheapest->reverse)
+			reverse_rotate(b, 'b');
+		else
+			rotate(b, 'b');
+		cheapest->cost_to_top--;
+	}
+	while (temp_a && temp_a->cost_to_top > 0)
+	{
+		if (temp_a->reverse)
+			reverse_rotate(a, 'a');
+		else
+			rotate(a, 'a');
+		temp_a->cost_to_top--;
+	}
 }
 
 int	find_median(t_list *a)
