@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kbrandon <kbrandon@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: kievaughn <kievaughn@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 17:42:39 by kbrandon          #+#    #+#             */
-/*   Updated: 2025/05/05 17:42:48 by kbrandon         ###   ########.fr       */
+/*   Updated: 2025/05/08 12:40:05 by kievaughn        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ int					get_total_cost(t_list *a, t_list *b_node);
 void				align_stacks(t_list **a, t_list **b, t_list *cheapest);
 void				push_swap(t_list **a, t_list **b);
 void				build_and_validate(int argc, char **argv, t_list **a);
+void				reverse_rotate_r(t_list **a, t_list **b);
+void    			rotate_r(t_list **a, t_list **b);
 
 #endif

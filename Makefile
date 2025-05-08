@@ -6,6 +6,7 @@ OBJ_PATH = obj/
 
 SRCS = src/main.c \
        src/operations.c \
+       src/operations_2.c \
        src/sort.c \
        src/calculations.c \
        src/utils.c \
