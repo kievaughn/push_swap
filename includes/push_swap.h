@@ -70,6 +70,6 @@ void				align_stacks(t_list **a, t_list **b, t_list *cheapest);
 void				push_swap(t_list **a, t_list **b);
 void				build_and_validate(int argc, char **argv, t_list **a);
 void				reverse_rotate_r(t_list **a, t_list **b);
-void    			rotate_r(t_list **a, t_list **b);
+void				rotate_r(t_list **a, t_list **b);
 
 #endif
